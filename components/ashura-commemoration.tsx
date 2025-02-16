@@ -171,47 +171,87 @@ export default function AshuraCommemoration() {
       }
     }
 
-    const createSplatters = (x: number, y: number) => {
-      const numSplatters = 15
-      const newSplatters = Array.from({ length: numSplatters }, () => ({
-        x: x + (Math.random() - 0.5) * 100,
-        y: y + (Math.random() - 0.5) * 100,
-        radius: 2 + Math.random() * 4,
-        opacity: 0.8,
+    const createSplatters = () => {
+      // Create one main large splatter and several smaller ones
+      const mainSplatter = {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: 30 + Math.random() * 40, // Large main spot
+        opacity: 0.9,
         time: timeRef.current
-      }))
-      splattersRef.current.push(...newSplatters)
-      textGlowIntensityRef.current = 1 // Max glow intensity
+      };
+
+      // Create surrounding smaller splatters
+      const numSmallSplatters = 15 + Math.floor(Math.random() * 10)
+      const smallSplatters = Array.from({ length: numSmallSplatters }, () => {
+        const angle = Math.random() * Math.PI * 2
+        const distance = mainSplatter.radius * (1 + Math.random() * 2)
+        return {
+          x: mainSplatter.x + Math.cos(angle) * distance,
+          y: mainSplatter.y + Math.sin(angle) * distance,
+          radius: 2 + Math.random() * 8, // Smaller varied sizes
+          opacity: 0.7 + Math.random() * 0.3,
+          time: timeRef.current
+        }
+      })
+
+      // Add tiny droplets
+      const numTinyDroplets = 25 + Math.floor(Math.random() * 15)
+      const tinyDroplets = Array.from({ length: numTinyDroplets }, () => {
+        const angle = Math.random() * Math.PI * 2
+        const distance = mainSplatter.radius * (1.5 + Math.random() * 3)
+        return {
+          x: mainSplatter.x + Math.cos(angle) * distance,
+          y: mainSplatter.y + Math.sin(angle) * distance,
+          radius: 0.5 + Math.random() * 2, // Tiny spots
+          opacity: 0.6 + Math.random() * 0.4,
+          time: timeRef.current
+        }
+      })
+
+      splattersRef.current.push(mainSplatter, ...smallSplatters, ...tinyDroplets)
+      textGlowIntensityRef.current = 1
     }
 
     const drawSplatters = (ctx: CanvasRenderingContext2D) => {
       splattersRef.current = splattersRef.current.filter(splatter => {
         const age = timeRef.current - splatter.time
-        if (age > 2) return false // Remove old splatters
+        if (age > 4) return false // Longer lifespan for more persistent spots
 
-        const fadeStart = 1
+        const fadeStart = 3
         if (age > fadeStart) {
-          splatter.opacity = 0.8 * (1 - (age - fadeStart))
+          splatter.opacity *= 0.97 // Smoother fade out
         }
 
-        ctx.beginPath()
-        ctx.fillStyle = `rgba(139, 0, 0, ${splatter.opacity})`
-        ctx.arc(splatter.x, splatter.y, splatter.radius, 0, Math.PI * 2)
-        ctx.fill()
-
-        // Add drip effect
-        ctx.beginPath()
-        ctx.fillStyle = `rgba(139, 0, 0, ${splatter.opacity * 0.7})`
-        const dripLength = 10 + Math.random() * 20
-        ctx.ellipse(
-          splatter.x,
-          splatter.y + dripLength,
-          splatter.radius / 2,
-          dripLength,
-          0,
-          0,
-          Math.PI * 2
+        // Draw blood spot with soft edges
+        const gradient = ctx.createRadialGradient(
+          splatter.x, splatter.y, 0,
+          splatter.x, splatter.y, splatter.radius
         )
+        gradient.addColorStop(0, `rgba(139, 0, 0, ${splatter.opacity})`)
+        gradient.addColorStop(0.7, `rgba(139, 0, 0, ${splatter.opacity * 0.8})`)
+        gradient.addColorStop(1, `rgba(139, 0, 0, 0)`)
+
+        ctx.beginPath()
+        ctx.fillStyle = gradient
+        
+        // Add slight irregularity to the shape
+        const numPoints = 8
+        ctx.moveTo(
+          splatter.x + splatter.radius * (1 + Math.random() * 0.1) * Math.cos(0),
+          splatter.y + splatter.radius * (1 + Math.random() * 0.1) * Math.sin(0)
+        )
+        
+        for (let i = 1; i <= numPoints; i++) {
+          const angle = (i * 2 * Math.PI) / numPoints
+          const radiusVariation = 1 + (Math.random() - 0.5) * 0.2
+          ctx.lineTo(
+            splatter.x + splatter.radius * radiusVariation * Math.cos(angle),
+            splatter.y + splatter.radius * radiusVariation * Math.sin(angle)
+          )
+        }
+        
+        ctx.closePath()
         ctx.fill()
 
         return true
@@ -247,12 +287,12 @@ export default function AshuraCommemoration() {
 
       chainsRef.current.forEach((chain, index) => {
         const chainX = chain.startX
-        const chainY = canvas.height * 0.6 // Changed from 0.2 to 0.6
+        const chainY = canvas.height * 0.6
         
         if (Math.abs(x - chainX) < 30 && y > chainY && y < chainY + 225) {
           chain.isWhipping = false;
           chain.swingVelocity += (x > chainX ? 0.1 : -0.1)
-          createSplatters(x, y)
+          createSplatters() // Now called without parameters
         }
       })
     }
