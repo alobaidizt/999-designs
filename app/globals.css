@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .diya {
+    @apply absolute w-4 h-4 rounded-full;
+    animation: float 3s infinite alternate ease-in-out, glow 1.5s infinite alternate ease-in-out;
+  }
+
+  .rangoli {
+    @apply absolute inset-0 opacity-20;
+    animation: twinkle 2s infinite alternate;
+  }
+
+  .star {
+    @apply absolute;
+    animation: twinkle-star 1.5s infinite alternate-reverse ease-in-out;
+  }
+
+  .lantern {
+    @apply absolute w-8 h-12;
+    background: radial-gradient(circle at center, #FFD700, #FFA500);
+    border-radius: 40% 40% 20% 20%;
+    box-shadow: 0 0 15px #FFD700;
+    animation: float-lantern 4s infinite alternate ease-in-out;
+  }
+
+  .crescent {
+    @apply absolute;
+    background: linear-gradient(45deg, #FFD700, #FFF5E1);
+    border-radius: 50%;
+    clip-path: path('M 50,0 A 50,50 0 1,1 100,100 A 40,40 0 1,0 100,0');
+  }
+
+  .cannon-smoke {
+    @apply absolute;
+    animation: dissipate 2s ease-out forwards;
+    transform-origin: center;
+    mix-blend-mode: screen;
+  }
+
+  .cannon {
+    transform-origin: bottom center;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    transition: filter 0.3s ease;
+    left: 30%;
+  }
+
+  .cannon.firing {
+    animation: recoil 0.5s cubic-bezier(0.2, 0, 0.3, 1);
+  }
+
+  .cannon-flash {
+    @apply absolute;
+    animation: flash 0.5s ease-out forwards;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  .cannon:hover {
+    filter: drop-shadow(0 6px 12px rgba(255, 215, 0, 0.3));
+  }
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.2; }
+  100% { opacity: 0.4; }
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(0, -10px); }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 20px #FFD700, 0 0 40px #FF6347; }
+  100% { box-shadow: 0 0 30px #FFD700, 0 0 60px #FF6347; }
+}
+
+@keyframes twinkle-star {
+  0% { opacity: 0.2; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes float-lantern {
+  0% { transform: translate(0, 0) rotate(-2deg); }
+  100% { transform: translate(0, -15px) rotate(2deg); }
+}
+
+@keyframes flash {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  20% {
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+@keyframes recoil {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  20% {
+    transform: translateX(-50px) rotate(-5deg);
+  }
+  40% {
+    transform: translateX(-30px) rotate(-3deg);
+  }
+  70% {
+    transform: translateX(-10px) rotate(-1deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+@keyframes dissipate {
+  0% {
+    opacity: 0.9;
+    transform: scale(1) translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3) translate(30px, -60px);
+  }
+}
+
+@layer utilities {
+  .animate-twinkle {
+    animation: twinkle 2s infinite alternate;
+  }
+
+  @keyframes float {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(0, -10px); }
+  }
+
+  @keyframes glow {
+    0% { box-shadow: 0 0 20px #FFD700, 0 0 40px #FF6347; }
+    100% { box-shadow: 0 0 30px #FFD700, 0 0 60px #FF6347; }
+  }
+} 
