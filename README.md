@@ -10,6 +10,32 @@ Welcome to **Festival Lights**, a Next.js application celebrating festive tradit
 - **Ramadan Cannon:** An interactive cannon animation complete with recoil, smoke, and flash effects.
 - **Halftone Wave:** An animated canvas wave with adjustable frequency controls.
 - **Responsive Design:** Built with Tailwind CSS for a consistent experience across devices.
+- **Ashura Commemoration:** A tribute to the Ashura commemoration with a dynamic animation of splatters and droplets.
+
+## Upcoming Themes
+
+- **Eid Al-Adha:** A tribute to the Eid Al-Adha festival with a dynamic animation of splatters and droplets.
+- **Christmas:** A tribute to the Christmas festival with a dynamic animation of splatters and droplets.
+- **New Year:** A tribute to the New Year festival with a dynamic animation of splatters and droplets.
+- **Holi:** A tribute to the Holi festival with a dynamic animation of splatters and droplets.
+- **Navroz:** A tribute to the Navroz festival with a dynamic animation of splatters and droplets.
+- **Bakra Eid:** A tribute to the Bakra Eid festival with a dynamic animation of splatters and droplets.
+- **Eid ul-Fitr:** A tribute to the Eid ul-Fitr festival with a dynamic animation of splatters and droplets.
+- **Snowman:** A tribute to the Snowman festival with a dynamic animation of splatters and droplets.
+- **Valentine's Day:** A tribute to the Valentine's Day festival with a dynamic animation of splatters and droplets.
+- **Easter:** A tribute to the Easter festival with a dynamic animation of splatters and droplets.
+- **Mother's Day:** A tribute to the Mother's Day festival with a dynamic animation of splatters and droplets.
+- **Father's Day:** A tribute to the Father's Day festival with a dynamic animation of splatters and droplets.
+- **Independence Day:** A tribute to the Independence Day festival with a dynamic animation of splatters and droplets.
+- **Labor Day:** A tribute to the Labor Day festival with a dynamic animation of splatters and droplets.
+- **Thanksgiving:** A tribute to the Thanksgiving festival with a dynamic animation of splatters and droplets.
+- **Christmas:** A tribute to the Christmas festival with a dynamic animation of splatters and droplets.
+
+
+
+
+
+
 
 ## Installation
 
